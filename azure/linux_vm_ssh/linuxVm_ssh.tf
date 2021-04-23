@@ -57,31 +57,6 @@ resource "azurerm_network_interface" "nic0" {
 }
 
 
-
-//resource "azurerm_network_security_group" "nsg" {
-//  location = var.region
-//  name = "az104-04-nsg01"
-//  resource_group_name = azurerm_resource_group.RsGrp.name
-//
-//  security_rule {
-//    access = "Allow"
-//    direction = "Inbound"
-//    name = "AllowRDPInBound"
-//    priority = 300
-//    protocol = "TCP"
-//    source_port_range          = "*"
-//    destination_port_range     = "*"
-//    source_address_prefix      = "*"
-//    destination_address_prefix = "*"
-//  }
-//}
-//
-//
-//resource "azurerm_network_interface_security_group_association" "nsg_nic0" {
-//  network_interface_id = azurerm_network_interface.nic0.id
-//  network_security_group_id = azurerm_network_security_group.nsg.id
-//}
-
 resource "azurerm_linux_virtual_machine" "vm0" {
   admin_username = "adminuser"
   location = var.region0

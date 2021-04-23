@@ -138,32 +138,5 @@ resource "azurerm_virtual_machine" "vm0" {
   }
 }
 
-resource "azurerm_virtual_machine" "vm1" {
 
-  location = var.region
-  name = "vm1"
-  resource_group_name = azurerm_resource_group.RsGrp.name
-  network_interface_ids = [azurerm_network_interface.nic1.id]
-  vm_size = "Standard_B1ms"
-  storage_os_disk {
-    create_option = "FromImage"
-    name = "myosdisk1"
-  }
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-
-  os_profile {
-    computer_name  = "hostname"
-    admin_username = "testadmin"
-    admin_password = "Password1234!"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
 

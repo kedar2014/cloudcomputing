@@ -1,4 +1,4 @@
-provider "azurerm" {
+x`provider "azurerm" {
   features {}
 }
 

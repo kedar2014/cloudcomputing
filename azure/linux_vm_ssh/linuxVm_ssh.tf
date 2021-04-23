@@ -10,7 +10,7 @@ variable "vnet0" {default = "linux_vm_vnet0"}
 variable "subnet0" {default = "linux_vm_subnet0"}
 variable "publicIP0" {default = "linux_vm_publicIP0"}
 variable "nic0" {default = "linux_vm_nic0"}
-variable "vm0" {default = "linux_vm0"}
+variable "vm0" {default = "linuxvm0"}
 
 
 resource "azurerm_resource_group" "RsGrp" {
@@ -82,33 +82,32 @@ resource "azurerm_network_interface" "nic0" {
 //  network_security_group_id = azurerm_network_security_group.nsg.id
 //}
 
-
-
-resource "azurerm_virtual_machine" "vm0" {
-
+resource "azurerm_linux_virtual_machine" "vm0" {
+  admin_username = "adminuser"
   location = var.region0
   name = var.vm0
-  resource_group_name = azurerm_resource_group.RsGrp.name
   network_interface_ids = [azurerm_network_interface.nic0.id]
-  vm_size = "Standard_B1ms"
-  storage_os_disk {
-    create_option = "FromImage"
-    name = "myosdisk0"
+  resource_group_name = azurerm_resource_group.RsGrp.name
+  size = "Standard_B1ms"
+  os_disk {
+    caching = "ReadWrite"
+    storage_account_type = "Standard_LRS"
   }
-  storage_image_reference {
+
+  admin_ssh_key {
+    username   = "adminuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "16.04-LTS"
     version   = "latest"
   }
 
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("C:/local_workspace/ING/.ssh/id_rsa.pub")
-  }
 
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
 }
+
+
 
